@@ -1,5 +1,5 @@
 # MetroDL
-Download your Metrolist playlists with ease.
+Download your [Metrolist] (https://github.com/MetrolistGroup/Metrolist) playlists with ease.
 
 ## 📜 About the Project
 MetroDL is a command-line tool designed to solve the pain point of manually tracking and downloading playlists created in Metrolist. It takes your exported `.csv` file and downloads music with related cover image and stores them in a folder with the playlist name, saving you time and hassle.
