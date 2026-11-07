@@ -21,7 +21,7 @@ def main():
     parser.add_argument("--max", "-m", type=int, default=None, help="Maximum items to process (optional)")
     parser.add_argument("--numeratetracks", "-n", type=int, default=None, help="Start index for track numbering (optional). If set, adds track metadata using CSV order; pass 1 to start at 1.")
     parser.add_argument("--no-covers", action="store_true", default=False, help="Skip downloading and embedding album covers. (optional)")
-    parser.add_argument("--cookies", "-c", action="store_true", default="chrome", help="Browser to use cookies from, default is chrome (optional)")
+    parser.add_argument("--cookies", "-c", choices=["brave", "chrome", "chromium", "edge", "firefox", "opera", "safari", "vivaldi", "whale"], default="chrome", help="Browser to use cookies from, default is chrome (optional)")
     args = parser.parse_args()
 
     CSV = args.playlist
@@ -79,7 +79,7 @@ def main():
             try:
                 subprocess.run(
                     shlex.split(
-                        f'yt-dlp -t mp3 -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" http://www.youtube.com/watch?v={vid} --cookies-from-browser {cookies} --fragment-retries 3'
+                        f'yt-dlp -x audio-format mp3 -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" http://www.youtube.com/watch?v={vid} --cookies-from-browser {cookies} --fragment-retries 3'
                     ),
                     check=True
                 )
