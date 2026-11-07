@@ -21,7 +21,7 @@ Navigate to your project directory and install the necessary Python packages:
 
 ```bash
 git clone https://github.com/Valentix53/MetroDL
-cd metrodl
+cd MetroDL
 pip install -r requirements.txt
 ```
 ---
