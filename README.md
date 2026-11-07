@@ -49,9 +49,9 @@ python MetroDL.py -p /path/to/playlist.csv
 ## Command Line Arguments
 - `--playlist` or `-p` Path to `csv` file (e.g. `~/music/playlist.csv`)
 - `--max` or `-m` Maximum items to process (optional)
-- `--numeratetracks` or `-n` Start index for track numbering (optional), g
-- ood for album playlists. If set, adds track metadata using CSV order; pass 1 to start at 1. 
+- `--numeratetracks` or `-n` Start index for track numbering, good for album playlists. If set, adds track metadata using CSV order; pass 1 to start at 1.(optional)
 - `--no-covers` Skip downloading and embedding album covers. (optional)
+- `--cookies` or `-c` Browser to use cookies from, default is chrome (optional)
 
 ### Key Parameters & Logic
 
