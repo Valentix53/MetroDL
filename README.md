@@ -66,6 +66,7 @@ python MetroDL.py -p /path/to/playlist.csv
 | `No module named '...'` | Missing Python dependency. | Re-run `pip install -r requirements.txt`. |
 | `ffmpeg: command not found` | FFmpeg is not installed or not in your system PATH. | Install FFmpeg and ensure it is accessible from your terminal. |
 | `ERROR: [youtube:'...'` | The YouTube URL might be private, deleted, or the required video-info page structure has changed. | Manually verify the URLs in the CSV file or delete from playlist |
+| `ERROR: unable to download video data: HTTP Error 403: Forbidden` | Youtube is being flacky | Try setting --cookies from your browser (e.g. `-c chromium`) |
 
 ## Notes about AI usage in this project
 I made this project in my freetime between study sessions with the assistance of a *local AI model* gemma4:e4b running on *my pc*
