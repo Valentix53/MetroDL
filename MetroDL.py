@@ -21,6 +21,7 @@ def main():
     parser.add_argument("--max", "-m", type=int, default=None, help="Maximum items to process (optional)")
     parser.add_argument("--numeratetracks", "-n", type=int, default=None, help="Start index for track numbering (optional). If set, adds track metadata using CSV order; pass 1 to start at 1.")
     parser.add_argument("--no-covers", action="store_true", default=False, help="Skip downloading and embedding album covers. (optional)")
+    parser.add_argument("--cookies", "-c", action="store_true", default="chrome", help="Browser to use cookies from, default is chrome (optional)")
     args = parser.parse_args()
 
     CSV = args.playlist
@@ -30,10 +31,11 @@ def main():
 
     # derive OUTDIR from playlist basename (without extension)
     base = os.path.splitext(os.path.basename(CSV))[0]
-    OUTDIR = base  # e.g., "@music_2"
+    OUTDIR = base  # e.g., "@playlist"
     MAX = args.max
     start_idx = args.numeratetracks
     no_covers = args.no_covers
+    cookies = args.cookies
 
 
     os.makedirs(OUTDIR, exist_ok=True)
@@ -66,7 +68,7 @@ def main():
                 if not no_covers:
                     subprocess.run(
                         shlex.split(
-                            f'yt-dlp --quiet -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" --write-thumbnail --skip-download  --cookies-from-browser chromium --no-warnings http://www.youtube.com/watch?v={vid}'
+                            f'yt-dlp --quiet -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" --write-thumbnail --skip-download  --cookies-from-browser {cookies} --no-warnings http://www.youtube.com/watch?v={vid}'
                         ),
                         check=True
                     )
@@ -77,7 +79,7 @@ def main():
             try:
                 subprocess.run(
                     shlex.split(
-                        f'yt-dlp -t mp3 -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" http://www.youtube.com/watch?v={vid} --cookies-from-browser chromium --fragment-retries 3'
+                        f'yt-dlp -t mp3 -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" http://www.youtube.com/watch?v={vid} --cookies-from-browser {cookies} --fragment-retries 3'
                     ),
                     check=True
                 )
