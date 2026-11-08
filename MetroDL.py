@@ -68,7 +68,7 @@ def main():
                 if not no_covers:
                     subprocess.run(
                         shlex.split(
-                            f'yt-dlp --quiet -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" --write-thumbnail --skip-download  --cookies-from-browser {cookies} --no-warnings http://www.youtube.com/watch?v={vid}'
+                            f'yt-dlp --quiet -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" --write-thumbnail --skip-download  --cookies-from-browser {cookies} --no-warnings https://www.youtube.com/watch?v={vid}'
                         ),
                         check=True
                     )
@@ -79,7 +79,7 @@ def main():
             try:
                 subprocess.run(
                     shlex.split(
-                        f'yt-dlp -x audio-format mp3 -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" http://www.youtube.com/watch?v={vid} --cookies-from-browser {cookies} --fragment-retries 3'
+                        f'yt-dlp -t mp3 -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" http://www.youtube.com/watch?v={vid} --cookies-from-browser {cookies} --fragment-retries 3'
                     ),
                     check=True
                 )
