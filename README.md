@@ -11,9 +11,11 @@ MetroDL is a command-line tool designed to solve the pain point of manually trac
 Before running the script, ensure you have the following software installed on your system:
 
 - **Python >= 3.11:** The environment for the script
+    * **yt-dlp:** Effective downloader, get it form the official repository https://github.com/yt-dlp/yt-dlp
+    * **Pillow:** To manage the thumbnails
+    * **Venv:** If you don't want to install the packages on your system but you prefer a virtual environment
 - **FFmpeg:** Essential for media encoding and format conversion
     * (Installation instructions vary by OS follow some guide online)
-- **yt-dlp:** Effective downloader, get it form the official repository https://github.com/yt-dlp/yt-dlp
 
 **1. Download**
 
@@ -24,6 +26,15 @@ git clone https://github.com/Valentix53/MetroDL
 cd MetroDL
 pip install -r requirements.txt
 ```
+
+Or use the script to create the virtual environment and execute the script
+
+``` bash
+git clone https://github.com/Valentix53/MetroDL
+cd MetroDL
+./MetroDL # will create the environment, download the packages and execute
+```
+
 ---
 ## 📑 Usage
 
@@ -42,6 +53,8 @@ Execute the script from your terminal, passing the name of your CSV file:
 
 ```bash
 python MetroDL.py -p /path/to/playlist.csv
+# or
+./MetroDL -p /path/to/playlist.csv
 ```
 
 ---
