@@ -2,8 +2,8 @@
 
 echo "--- MetroDL Started ---"
 
-PYDIR = ""
-FFDIR = ""
+PYDIR=""
+FFDIR=""
 
 if [ ! -d ./.venv/ ]; then
 	echo "--- SETUP ---"
@@ -11,12 +11,12 @@ if [ ! -d ./.venv/ ]; then
 	echo "Path to Python binary (leave empty to use system):"
 	read PYDIR
 	if [ -z "$PYDIR" ]; then
-		PYDIR = "python3"
+		PYDIR="python3"
 	fi
 	echo "Path to FFMPEG binary (leave empty to use system):"
 	read FFDIR
 	if [ -z "$FFDIR" ]; then
-		FFDIR = "ffmpeg"
+		FFDIR="ffmpeg"
 	fi
 
 	echo "--- Writing config file ---"
