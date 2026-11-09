@@ -1,11 +1,37 @@
 #!/bin/bash
 
+echo "--- MetroDL Started ---"
+
+PYDIR = ""
+FFDIR = ""
+
 if [ ! -d ./.venv/ ]; then
-	python3 -m venv .venv
+	echo "--- SETUP ---"
+	# creation of conf file with path to ffmpeg and python (leave empty to use default)
+	echo "Path to Python install (leave empty to use system):"
+	read PYDIR
+	if [ -z "$PYDIR" ]; then
+		PYDIR = "python3"
+	fi
+	echo "Path to FFMPEG install (leave empty to use system):"
+	read FFDIR
+	if [ -z "$FFDIR" ]; then
+		FFDIR = "ffmpeg"
+	fi
+
+	echo "--- Writing config file ---"
+	echo "PYDIR=$PYDIR" > .paths.conf
+	echo "FFDIR=$FFDIR" >> .paths.conf
+
+	echo "--- Creating venv ---"
+	$PYDIR -m venv .venv
 	source .venv/bin/activate
+
+	echo "--- Installing dependencies ---"
 	pip install -r requirements.txt yt-dlp
 else
+	source .paths.conf
 	source .venv/bin/activate
 fi
 
-python3 MetroDL.py $@
+$PYDIR MetroDL.py -f $FFDIR $@
