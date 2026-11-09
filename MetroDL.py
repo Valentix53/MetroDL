@@ -48,8 +48,6 @@ def main():
 
     ffmpeg = args.ffmpeg
 
-    print(f'yt-dlp --quiet -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" --write-thumbnail --skip-download  {cookie_flag} {cookies}')
-
     os.makedirs(OUTDIR, exist_ok=True)
     os.makedirs(TMPDIR, exist_ok=True)
 
