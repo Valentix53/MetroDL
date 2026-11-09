@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--numeratetracks", "-n", type=int, default=None, help="Start index for track numbering (optional). If set, adds track metadata using CSV order; pass 1 to start at 1.")
     parser.add_argument("--no-covers", action="store_true", default=False, help="Skip downloading and embedding album covers. (optional)")
     parser.add_argument("--cookies", "-c", choices=["brave", "chrome", "chromium", "edge", "firefox", "opera", "safari", "vivaldi", "whale"], default="chrome", help="Browser to use cookies from, default is chrome (optional)")
+    parser.add_argument("--ffmpeg", "-f", default="ffmpeg", help="Sets ffmpeg path (/path/to/ffmpeg) (optional)")
     args = parser.parse_args()
 
     CSV = args.playlist
@@ -36,6 +37,7 @@ def main():
     start_idx = args.numeratetracks
     no_covers = args.no_covers
     cookies = args.cookies
+    ffmpeg = args.ffmpeg
 
 
     os.makedirs(OUTDIR, exist_ok=True)
@@ -134,13 +136,13 @@ def main():
                 print("cover found")
                 if start_idx is not None:
                     track_num = i + start_idx
-                    cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-i', audio_path, '-i', cover,
+                    cmd = [ffmpeg, '-y', '-loglevel', 'error', '-i', audio_path, '-i', cover,
                         '-map', '0:a', '-map', '1', '-c:a', 'libmp3lame', '-q:a', '2'] + meta + [
                         '-id3v2_version', '3', '-metadata', f'track={track_num}',
                         '-metadata:s:v', 'title=Album cover',
                         '-metadata:s:v', 'comment=Cover (front)', '-f', 'mp3', tmp_out]
                 else:
-                    cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-i', audio_path, '-i', cover,
+                    cmd = [ffmpeg, '-y', '-loglevel', 'error', '-i', audio_path, '-i', cover,
                         '-map', '0:a', '-map', '1', '-c:a', 'libmp3lame', '-q:a', '2'] + meta + [
                         '-id3v2_version', '3', '-metadata:s:v', 'title=Album cover',
                         '-metadata:s:v', 'comment=Cover (front)', '-f', 'mp3', tmp_out]
@@ -150,10 +152,10 @@ def main():
 
                 if start_idx is not None:
                     track_num = i + start_idx
-                    cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-i', audio_path,
+                    cmd = [ffmpeg, '-y', '-loglevel', 'error', '-i', audio_path,
                         '-c:a', 'libmp3lame', '-q:a', '2'] + meta + ['-id3v2_version', '3', '-metadata', f'track={track_num}', '-f', 'mp3', tmp_out]
                 else:
-                    cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-i', audio_path,
+                    cmd = [ffmpeg, '-y', '-loglevel', 'error', '-i', audio_path,
                         '-c:a', 'libmp3lame', '-q:a', '2'] + meta + ['-id3v2_version', '3', '-f', 'mp3', tmp_out]
 
             if not os.path.exists(audio_path) or os.path.getsize(audio_path) == 0:
