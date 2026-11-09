@@ -8,12 +8,12 @@ FFDIR = ""
 if [ ! -d ./.venv/ ]; then
 	echo "--- SETUP ---"
 	# creation of conf file with path to ffmpeg and python (leave empty to use default)
-	echo "Path to Python install (leave empty to use system):"
+	echo "Path to Python binary (leave empty to use system):"
 	read PYDIR
 	if [ -z "$PYDIR" ]; then
 		PYDIR = "python3"
 	fi
-	echo "Path to FFMPEG install (leave empty to use system):"
+	echo "Path to FFMPEG binary (leave empty to use system):"
 	read FFDIR
 	if [ -z "$FFDIR" ]; then
 		FFDIR = "ffmpeg"
