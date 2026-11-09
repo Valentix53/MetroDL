@@ -22,7 +22,7 @@ def main():
     parser.add_argument("--numeratetracks", "-n", type=int, default=None, help="Start index for track numbering (optional). If set, adds track metadata using CSV order; pass 1 to start at 1.")
     parser.add_argument("--no-covers", action="store_true", default=False, help="Skip downloading and embedding album covers. (optional)")
     parser.add_argument("--cookies", "-c", choices=["brave", "chrome", "chromium", "edge", "firefox", "opera", "safari", "vivaldi", "whale"], default="chrome", help="Browser to use cookies from, default is chrome (optional)")
-    parser.add_argument("--cookie-file", "-C", default=None, help="Don't use browser cookies but use a file (optional)")
+    parser.add_argument("--cookie-file", "-C", default=None, help="Use cookie file instead of browser (optional)")
     parser.add_argument("--ffmpeg", "-f", default="ffmpeg", help="Sets ffmpeg path (/path/to/ffmpeg) (optional)")
     args = parser.parse_args()
 
