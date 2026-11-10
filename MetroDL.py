@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--numeratetracks", "-n", type=int, default=None, help="Start index for track numbering (optional). If set, adds track metadata using CSV order; pass 1 to start at 1.")
     parser.add_argument("--no-covers", action="store_true", default=False, help="Skip downloading and embedding album covers. (optional)")
     parser.add_argument("--cookies", "-c", choices=["brave", "chrome", "chromium", "edge", "firefox", "opera", "safari", "vivaldi", "whale"], default="chrome", help="Browser to use cookies from, default is chrome (optional)")
+    parser.add_argument("--cookie-file", "-C", default=None, help="Use cookie file instead of browser (optional)")
     parser.add_argument("--ffmpeg", "-f", default="ffmpeg", help="Sets ffmpeg path (/path/to/ffmpeg) (optional)")
     args = parser.parse_args()
 
@@ -30,15 +31,22 @@ def main():
         print("Playlist file not found:", CSV)
         sys.exit(1)
 
+    cookie_flag = ""
+    cookies = ""
     # derive OUTDIR from playlist basename (without extension)
     base = os.path.splitext(os.path.basename(CSV))[0]
     OUTDIR = base  # e.g., "@playlist"
     MAX = args.max
     start_idx = args.numeratetracks
     no_covers = args.no_covers
-    cookies = args.cookies
-    ffmpeg = args.ffmpeg
+    if args.cookie_file == None:
+        cookie_flag = "--cookies-from-browser"
+        cookies = args.cookies
+    else:
+        cookie_flag = "--cookies"
+        cookies = args.cookie_file
 
+    ffmpeg = args.ffmpeg
 
     os.makedirs(OUTDIR, exist_ok=True)
     os.makedirs(TMPDIR, exist_ok=True)
@@ -70,7 +78,7 @@ def main():
                 if not no_covers:
                     subprocess.run(
                         shlex.split(
-                            f'yt-dlp --quiet -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" --write-thumbnail --skip-download  --cookies-from-browser {cookies} --no-warnings https://www.youtube.com/watch?v={vid}'
+                            f'yt-dlp --quiet -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" --write-thumbnail --skip-download {cookie_flag} {cookies} --no-warnings https://www.youtube.com/watch?v={vid}'
                         ),
                         check=True
                     )
@@ -81,7 +89,7 @@ def main():
             try:
                 subprocess.run(
                     shlex.split(
-                        f'yt-dlp -t mp3 -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" http://www.youtube.com/watch?v={vid} --cookies-from-browser {cookies} --fragment-retries 3'
+                        f'yt-dlp -t mp3 -f bestaudio --output "{TMPDIR}/%(id)s.%(ext)s" http://www.youtube.com/watch?v={vid} {cookie_flag} {cookies} --fragment-retries 3'
                     ),
                     check=True
                 )
